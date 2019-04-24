@@ -24,9 +24,11 @@ podTemplate(
 ) {
     node('mypod') {
         def commitId
+        def branch
         stage ('Extract') {
             checkout scm
-            commitId = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
+            commitId = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim
+            branch = ${GIT_BRANCH#*/}
         }
         def repository
         stage ('Docker') {
@@ -41,7 +43,7 @@ podTemplate(
             container ('helm') {
                 sh "/helm init --client-only --skip-refresh"
 				sh "ls -l"
-                sh "/helm install --set image.repository=${repository},image.tag=${commitId} ."
+                sh "/helm install --set image.repository=${repository},image.tag=${commitId},image.branch=${branch} ."
             }
         }
     }
