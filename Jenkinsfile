@@ -44,7 +44,7 @@ podTemplate(
             container ('helm') {
                 sh "/helm init --client-only --skip-refresh"
 				sh "ls -l"
-                sh "/helm update --install --set image.repository=${repository},image.tag=${commitId},image.branch=${branch} ${branch} ."
+                sh "/helm upgrade --install --set image.repository=${repository},image.tag=${commitId},image.branch=${branch} ${branch} ."
             }
         }
     }
