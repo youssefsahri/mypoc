@@ -1,5 +1,6 @@
 {{- if .Values.ingress.enabled -}}
 {{- $fullName := include "Mypoc.fullname" . -}}
+{{- $ingresshost := .Values.image.branch -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -19,14 +20,14 @@ spec:
   {{- range .Values.ingress.tls }}
     - hosts:
       {{- range .hosts }}
-        - {{ .Values.image.branch . | quote }}
+        - {{ printf "%s.%s" $ingresshost .host }}
       {{- end }}
       secretName: {{ .secretName }}
   {{- end }}
 {{- end }}
   rules:
   {{- range .Values.ingress.hosts }}
-    - host: {{ .Values.image.branch .host | quote }}
+    - host: {{ printf "%s.%s" $ingresshost .host }}
       http:
         paths:
         {{- range .paths }}
