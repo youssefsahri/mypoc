@@ -29,7 +29,7 @@ podTemplate(
             echo 'Pulling...' + env.BRANCH_NAME
             checkout scm
             commitId = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
-            branch = ${GIT_BRANCH}
+            branch = env.BRANCH_NAME
         }
         def repository
         stage ('Docker') {
@@ -44,7 +44,7 @@ podTemplate(
             container ('helm') {
                 sh "/helm init --client-only --skip-refresh"
 				sh "ls -l"
-                sh "/helm install --set image.repository=${repository},image.tag=${commitId},image.branch=${branch} ."
+                sh "/helm update --install --set image.repository=${repository},image.tag=${commitId},image.branch=${branch} ."
             }
         }
     }
