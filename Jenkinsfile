@@ -41,7 +41,7 @@ podTemplate(
             container ('helm') {
                 sh "/helm init --client-only --skip-refresh"
 				sh "ls -l"
-                sh "/helm install --set image.repository=${repository},image.tag=${commitId} ./mypoc"
+                sh "/helm install --set image.repository=${repository},image.tag=${commitId} ."
             }
         }
     }
