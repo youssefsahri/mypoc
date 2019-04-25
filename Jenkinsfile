@@ -48,7 +48,7 @@ podTemplate(
             }
         }
 		stage ('Invoke_pipeline') {
-            steps {
+            build {
                 build 'test'
             }
         }
