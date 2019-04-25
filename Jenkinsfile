@@ -29,7 +29,7 @@ podTemplate(
             echo 'Pulling...' + env.BRANCH_NAME
             checkout scm
             commitId = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
-            branch = env.BRANCH_NAME
+            branch = (env.BRANCH_NAME.toLowerCase()).replace("-", ".")
         }
         def repository
         stage ('Docker') {
