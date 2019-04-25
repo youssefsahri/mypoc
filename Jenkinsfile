@@ -47,10 +47,5 @@ podTemplate(
                 sh "/helm upgrade --install --set image.repository=${repository},image.tag=${commitId},image.branch=${branch} ${branch} ."
             }
         }
-		stage ('Delete unused images') {
-            container ('docker') {
-                sh "docker images -q |xargs docker rmi --force"
-            }
-        }
     }
 }
