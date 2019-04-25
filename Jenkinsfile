@@ -48,9 +48,8 @@ podTemplate(
             }
         }
 		stage ('Invoke_pipeline') {
-            build {
-                build 'test'
-            }
+				echo "purge old images"
+                build 'yo'
         }
     }
 }
